@@ -44,12 +44,12 @@ Edit `~/.openclaw/openclaw.json` and add this under `models.providers`:
 "jiekou": {
   "baseUrl": "https://api.highwayapi.ai/openai/v1",
   "apiKey": "YOUR_KEY_HERE",
-  "api": "anthropic-messages",
+  "api": "openai-completions",
   "models": [
     {
       "id": "claude-fable-5",
       "name": "Claude Fable 5",
-      "api": "anthropic-messages",
+      "api": "openai-completions",
       "reasoning": true,
       "input": ["text", "image"],
       "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
@@ -99,6 +99,9 @@ If both of those are gone, Fable 5 is live. 🎉
 ---
 
 ## Troubleshooting
+
+### HTTP 404: 404 page not found
+Your `api` adapter doesn't match the base URL. The `/openai/v1` base URL is OpenAI-compatible, so you must use `"api": "openai-completions"` (in both the provider block and the model entry). Setting `"api": "anthropic-messages"` makes OpenClaw hit an Anthropic-style path that doesn't exist under `/openai/v1` → 404.
 
 ### "Invalid or expired token"
 You're hitting the wrong base URL. jiekou.ai keys only work against `https://api.highwayapi.ai` — test with the curl command from Step 0.
